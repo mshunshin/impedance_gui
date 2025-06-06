@@ -452,23 +452,29 @@ class Analysis(QtWidgets.QMainWindow):
                 plot.addItem(label)
 
         self.plot1.plot(self.bpecg.maptime, self.bpecg.mapfi)
-        plot_layout.addWidget(self.plot1)
+        self.plot1.setFixedHeight(int(self.height() * 0.1))
 
-        #self.plot1.setFixedHeight(int(self.height() * 0.1))
         self.plot2.setTitle('MAP', bold=1, size="20pt")
+        self.plot2.plot(self.bpecg.maptime, self.bpecg.mapfi)
+
+        self.plot3.setTitle('Thoracic Impedance', bold=1, size="20pt")
         self.plot3.plot(self.imp1.timestamps, self.imp1_m)
         self.plot3.setYRange(min(self.imp1_m), max(self.imp1_m))
+        self.plot3.setXLink(self.plot2)
+
+        self.plot4.setTitle('Splanchnic Impedance', bold=1, size="20pt")
         self.plot4.plot(self.imp2.timestamps, self.imp2_m)
         self.plot4.setYRange(min(self.imp2_m), max(self.imp2_m))
-        self.plot5.plot(self.bpecg.hrtime, self.bpecg.hr)
-        self.plot6.plot(self.bpecg.aptime, self.bpecg.ap)
-        self.plot3.setXLink(self.plot2)
-        self.plot3.setTitle('Thoracic Impedance', bold=1, size="20pt")
         self.plot4.setXLink(self.plot2)
-        self.plot4.setTitle('Splanchnic Impedance', bold=1, size="20pt")
-        self.plot5.setXLink(self.plot2)
+
         self.plot5.setTitle('Heart Rate', bold=1, size="20pt")
+        self.plot5.plot(self.bpecg.hrtime, self.bpecg.hr)
+        self.plot5.setXLink(self.plot2)
+
         self.plot6.setTitle('Beat-Beat Blood Pressure', bold=1, size="20pt")
+        self.plot6.plot(self.bpecg.aptime, self.bpecg.ap)
+
+        plot_layout.addWidget(self.plot1)
         plot_layout.addWidget(self.plot3)
         plot_layout.addWidget(self.plot4)
 
