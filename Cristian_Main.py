@@ -473,6 +473,7 @@ class Analysis(QtWidgets.QMainWindow):
 
         self.plot6.setTitle('Beat-Beat Blood Pressure', bold=1, size="20pt")
         self.plot6.plot(self.bpecg.aptime, self.bpecg.ap)
+        self.plot6.setXLink(self.plot2)
 
         plot_layout.addWidget(self.plot1)
         plot_layout.addWidget(self.plot3)
@@ -482,6 +483,7 @@ class Analysis(QtWidgets.QMainWindow):
             self.plot7.plot(self.imp3.timestamps, self.imp3_m)
             self.plot7.setYRange(min(self.imp3_m), max(self.imp3_m))
             self.plot7.setTitle('Thigh Impedance', bold=1, size="20pt")
+            self.plot7.setXLink(self.plot2)
             plot_layout.addWidget(self.plot7)
 
         plot_layout.addWidget(self.plot5)
