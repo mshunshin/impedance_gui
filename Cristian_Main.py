@@ -21,9 +21,9 @@ from imp.bpecg import Nova
 
 import pyqtgraph as pg
 
-from cyclopts import App
+#from cyclopts import App
 
-cl_app = App()
+#cl_app = App()
 
 
 class Startup(QtWidgets.QMainWindow):
@@ -33,7 +33,7 @@ class Startup(QtWidgets.QMainWindow):
 
         # Create a QPushButton object and set its properties
         self.setWindowTitle("Welcome to use Impedance Analysis GUI")
-        self.data_dir = data_dir
+        self.data_dir = Path(data_dir)
         self.detect_path()
         button1 = QtWidgets.QPushButton("Select Patient Data Folder for Impedance Analysis")
         button1.setToolTip("Good Luck with your data analysis")
@@ -423,36 +423,6 @@ class Analysis(QtWidgets.QMainWindow):
             self.plot7 = pg.PlotWidget()
             plot_list.append(self.plot7)
 
-        if False:
-            if hasattr(self.imp1, 't_tilted'):
-                v_tilt = pg.InfiniteLine(pos=self.imp1.t_tilted, angle=90, movable=False)
-                label = pg.TextItem(text="Tilt")
-                self.plot7 = pg.PlotWidget()
-                self.plot7.addItem(v_tilt)
-
-                diff = [x - self.imp1.t_tilted for x in self.bpecg.maptime]
-                time_index = np.argmin(np.abs(diff))
-                label.setPos(self.imp1.t_tilted, self.bpecg.mapfi[time_index])
-                self.plot7.addItem(label)
-            if hasattr(self.imp1, 't_gtn'):
-                v_gtn = pg.InfiniteLine(pos=self.imp1.t_gtn, angle=90, movable=False)
-                self.plot7.addItem(v_gtn)
-                label = pg.TextItem(text="GTN")
-                diff = [x - self.imp1.t_gtn for x in self.bpecg.maptime]
-                time_index = np.argmin(np.abs(diff))
-                label.setPos(self.imp1.t_gtn, self.bpecg.mapfi[time_index])
-                self.plot7.addItem(label)
-            v_end = pg.InfiniteLine(pos=self.imp1.t_end, angle=90, movable=False)
-            self.plot7.addItem(v_end)
-            label = pg.TextItem(text="EoT")
-            diff = [x - self.imp1.t_end for x in self.bpecg.maptime]
-            time_index = np.argmin(np.abs(diff))
-            label.setPos(self.imp1.t_end, self.bpecg.mapfi[time_index])
-            self.plot7.addItem(label)
-            self.plot7.plot(self.imp3.timestamps, self.imp3_m)
-            self.plot7.setYRange(min(self.imp3_m), max(self.imp3_m))
-            self.plot7.setTitle('Thigh Impedance', bold=1, size="20pt")
-
         for plot in plot_list:
             if hasattr(self.imp1, 't_tilted'):
                 v_tilt = pg.InfiniteLine(pos=self.imp1.t_tilted, angle=90, movable=False)
@@ -483,7 +453,8 @@ class Analysis(QtWidgets.QMainWindow):
 
         self.plot1.plot(self.bpecg.maptime, self.bpecg.mapfi)
         plot_layout.addWidget(self.plot1)
-        self.plot1.setFixedHeight(int(self.height() * 0.1))
+
+        #self.plot1.setFixedHeight(int(self.height() * 0.1))
         self.plot2.setTitle('MAP', bold=1, size="20pt")
         self.plot3.plot(self.imp1.timestamps, self.imp1_m)
         self.plot3.setYRange(min(self.imp1_m), max(self.imp1_m))
@@ -491,11 +462,11 @@ class Analysis(QtWidgets.QMainWindow):
         self.plot4.setYRange(min(self.imp2_m), max(self.imp2_m))
         self.plot5.plot(self.bpecg.hrtime, self.bpecg.hr)
         self.plot6.plot(self.bpecg.aptime, self.bpecg.ap)
-        # self.plot3.setXLink(self.plot2)
+        self.plot3.setXLink(self.plot2)
         self.plot3.setTitle('Thoracic Impedance', bold=1, size="20pt")
-        # self.plot4.setXLink(self.plot2)
+        self.plot4.setXLink(self.plot2)
         self.plot4.setTitle('Splanchnic Impedance', bold=1, size="20pt")
-        # self.plot5.setXLink(self.plot2)
+        self.plot5.setXLink(self.plot2)
         self.plot5.setTitle('Heart Rate', bold=1, size="20pt")
         self.plot6.setTitle('Beat-Beat Blood Pressure', bold=1, size="20pt")
         plot_layout.addWidget(self.plot3)
@@ -559,7 +530,7 @@ class Analysis(QtWidgets.QMainWindow):
         splitter.addWidget(plot_widget)
 
         # Set the initial sizes of the widgets
-        #splitter.setSizes([self.width() * 0.1, self.width() * 0.9])
+        splitter.setSizes([int(self.width() * 0.1), int(self.width() * 0.9)])
 
         # Set the splitter as the central widget of the main window
         layout.addWidget(splitter)
@@ -1231,13 +1202,13 @@ class Analysis(QtWidgets.QMainWindow):
         print(xmax)
 
 
-@cl_app.default
+#@cl_app.default
 def main(data_dir: Path):
-    app = QtWidgets.QApplication()
-    window = Startup(data_dir)
+    app = QtWidgets.QApplication([])
+    window = Startup(data_dir=data_dir)
     window.show()
     app.exec()
 
 
 if __name__ == '__main__':
-    cl_app()
+    main(data_dir="/Volumes/Matt-Temp/impedance_data")
