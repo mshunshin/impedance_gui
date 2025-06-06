@@ -21,9 +21,9 @@ from imp.bpecg import Nova
 
 import pyqtgraph as pg
 
-#from cyclopts import App
+from cyclopts import App
 
-#cl_app = App()
+cl_app = App()
 
 
 class Startup(QtWidgets.QMainWindow):
@@ -1210,7 +1210,7 @@ class Analysis(QtWidgets.QMainWindow):
         print(xmax)
 
 
-#@cl_app.default
+@cl_app.default
 def main(data_dir: Path):
     app = QtWidgets.QApplication([])
     window = Startup(data_dir=data_dir)
@@ -1219,4 +1219,4 @@ def main(data_dir: Path):
 
 
 if __name__ == '__main__':
-    main(data_dir="/Volumes/Matt-Temp/impedance_data")
+    cl_app()
