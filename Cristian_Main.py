@@ -13,11 +13,8 @@ from scipy import stats
 from PySide6 import QtWidgets, QtGui, QtCore
 from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QHBoxLayout, QWidget, QSplitter, QLabel
 
-import imp
 from imp.reader import Sciospec
 from imp.bpecg import Nova
-#import sciopy as Sciospec
-#from nova_client import NOVAClient as Nova
 
 import pyqtgraph as pg
 
@@ -1215,7 +1212,7 @@ def main(data_dir: Path):
     app = QtWidgets.QApplication([])
     window = Startup(data_dir=data_dir)
     window.show()
-    app.exec()
+    sys.exit(app.exec())
 
 
 if __name__ == '__main__':
