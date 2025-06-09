@@ -118,22 +118,22 @@ class Sciospec:
             if os.path.isdir(impfilepath) == False:
                 os.makedirs(os.path.join((ParentPath), 'impfile'))
             # filename= ParentPath
-            with open(impfilepath + "/freq" + str(num) + ".txt", "w") as frequency:
+            with open(impfilepath / f"freq{str(num)}.txt", "w") as frequency:
                 for item in self.freq:
                     frequency.write("%s\n" % item)
-            with open(impfilepath + "/timestamps" + str(num) + ".txt", "w") as time:
+            with open(impfilepath / f"timestamps{str(num)}.txt", "w") as time:
                 for item in self.timestamps:
                     time.write("%s\n" % item)
-            with open(impfilepath + "/real_ohm" + str(num) + ".txt", "w") as real:
+            with open(impfilepath / f"real_ohm{str(num)}.txt", "w") as real:
                 for item in all_real_ohm:
                     real.write("%s\n" % item)
-            with open(impfilepath + "/imag_ohm" + str(num) + ".txt", "w") as img:
+            with open(impfilepath / f"imag_ohm{str(num)}.txt", "w") as img:
                 for item in all_imag_ohm:
                     img.write("%s\n" % item)
-            with open(impfilepath + "/sort_idx" + str(num) + ".txt", "w") as idx:
+            with open(impfilepath / f"sort_idx{str(num)}.txt", "w") as idx:
                 for item in sort_idx:
                     idx.write("%s\n" % item)
-            # with open(ParentPath + "/abs_ohm"+str(num)+".txt","w") as absimp:
+            # with open(ParentPath / f"abs_ohm{str(num)}.txt","w") as absimp:
             #    for item in self.abs_ohm_np:
             #        absimp.write("%s\n" % item)
 
